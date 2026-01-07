@@ -9,6 +9,9 @@ export type EntryView = {
   subjectName: string;
   facultyName: string;
   roomName: string;
+  sectionId?: number;
+  sectionName?: string;
+  facultyId?: number;
 };
 
 export interface TimetableGridProps {

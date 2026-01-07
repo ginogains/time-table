@@ -1,7 +1,3 @@
--- Create database if not exists
-CREATE DATABASE IF NOT EXISTS timetable;
-USE timetable;
-
 -- Core reference data
 CREATE TABLE department (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,

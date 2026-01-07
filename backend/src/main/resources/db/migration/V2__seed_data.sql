@@ -1,8 +1,6 @@
 -- Seed data for timetable application
 -- Run this after V1__init.sql to populate the database with test data
 
-USE timetable;
-
 -- Insert working days
 INSERT INTO working_day (name, order_index) VALUES 
 ('Monday', 1),
