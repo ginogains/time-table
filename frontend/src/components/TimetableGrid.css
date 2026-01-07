@@ -1,0 +1,21 @@
+.timetable-grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.timetable-grid th,
+.timetable-grid td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.timetable-cell .subject {
+  font-weight: 600;
+}
+
+.timetable-cell .faculty,
+.timetable-cell .room {
+  font-size: 0.85rem;
+  color: #555;
+}
