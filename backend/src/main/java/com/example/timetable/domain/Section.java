@@ -19,7 +19,7 @@ public class Section {
   @Column(nullable = false, length = 20)
   private String name;
 
-  @Column(nullable = false)
+  @Column(name = "`year`", nullable = false)
   private Integer year;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
