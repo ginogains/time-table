@@ -1,6 +1,7 @@
 package com.example.timetable.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +17,6 @@ public class FacultyDto {
   private String designation;
   private Integer maxHoursPerDay;
   private Integer maxHoursPerWeek;
+  @NotNull
+  private Long departmentId;
 }

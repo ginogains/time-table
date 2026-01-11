@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { getClassView, type TimetableEntryView } from '../api/timetableApi';
+import { getFacultyView, type TimetableEntryView } from '../api/timetableApi';
 import { TimetableGrid, type EntryView } from '../components/TimetableGrid';
 import { Button, Stack, TextField } from '@mui/material';
 
-export function ClassTimetablePage() {
+export function FacultyTimetablePage() {
   const [timetableId, setTimetableId] = useState(1);
-  const [sectionId, setSectionId] = useState(1);
+  const [facultyId, setFacultyId] = useState(1);
   const [entries, setEntries] = useState<EntryView[]>([]);
   const [days, setDays] = useState<string[]>([]);
   const [slots, setSlots] = useState<{ slotIndex: number }[]>([]);
 
   const load = async () => {
-    const res = await getClassView(timetableId, sectionId);
+    const res = await getFacultyView(timetableId, facultyId);
     setEntries(res.data as EntryView[]);
     const uniqueDays = Array.from(new Set(res.data.map(e => e.dayName)));
     setDays(uniqueDays);
@@ -37,9 +37,9 @@ export function ClassTimetablePage() {
         />
         <TextField
           type="number"
-          label="Section ID"
-          value={sectionId}
-          onChange={e => setSectionId(Number(e.target.value))}
+          label="Faculty ID"
+          value={facultyId}
+          onChange={e => setFacultyId(Number(e.target.value))}
         />
         <Button variant="contained" onClick={load}>
           Load

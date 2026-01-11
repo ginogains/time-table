@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { Button, Stack, TextField, Typography, Alert, Box, CircularProgress } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Button, Stack, TextField, Typography, Alert, Box, CircularProgress, Autocomplete } from '@mui/material';
 import { generateTimetable } from '../api/timetableApi';
 import { api } from '../api/http';
+import { listDepartments, type Department } from '../api/departmentApi';
+import { listSemesters, type Semester } from '../api/semesterApi';
+import { listSections, type Section } from '../api/sectionApi';
 
 interface HealthResponse {
   status: string;
@@ -13,11 +16,33 @@ interface HealthResponse {
 export function GenerateTimetablePage() {
   const [departmentId, setDepartmentId] = useState(1);
   const [semesterId, setSemesterId] = useState(1);
-  const [sectionIds, setSectionIds] = useState('1');
+  const [selectedSections, setSelectedSections] = useState<number[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [semesters, setSemesters] = useState<Semester[]>([]);
+  const [sections, setSections] = useState<Section[]>([]);
   const [result, setResult] = useState<{ id: number; status: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [backendStatus, setBackendStatus] = useState<'unknown' | 'online' | 'offline'>('unknown');
+
+  const loadData = async () => {
+    try {
+      const [departmentsRes, semestersRes, sectionsRes] = await Promise.all([
+        listDepartments(),
+        listSemesters(),
+        listSections(),
+      ]);
+      setDepartments(departmentsRes.data);
+      setSemesters(semestersRes.data);
+      setSections(sectionsRes.data);
+    } catch (e) {
+      console.error('Failed to load data', e);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const checkBackendHealth = async () => {
     try {
@@ -46,22 +71,16 @@ export function GenerateTimetablePage() {
     }
 
     try {
-      const parsedSectionIds = sectionIds
-          .split(',')
-          .map(s => s.trim())
-          .filter(Boolean)
-          .map(Number);
-      
-      if (parsedSectionIds.length === 0) {
-        setError('Please enter at least one section ID');
+      if (selectedSections.length === 0) {
+        setError('Please select at least one section');
         setLoading(false);
         return;
       }
-      
+
       const res = await generateTimetable({
         departmentId,
         semesterId,
-        sectionIds: parsedSectionIds,
+        sectionIds: selectedSections,
       });
       setResult(res.data);
     } catch (e: any) {
@@ -111,26 +130,33 @@ export function GenerateTimetablePage() {
         </Button>
       </Box>
 
-      <TextField
-        type="number"
-        label="Department ID"
-        value={departmentId}
-        onChange={e => setDepartmentId(Number(e.target.value))}
+      <Autocomplete
+        fullWidth
         disabled={loading}
+        options={departments}
+        getOptionLabel={(option) => `${option.name} (${option.code})`}
+        value={departments.find(d => d.id === departmentId) || null}
+        onChange={(_, newValue) => setDepartmentId(newValue?.id || 1)}
+        renderInput={(params) => <TextField {...params} label="Department" />}
       />
-      <TextField
-        type="number"
-        label="Semester ID"
-        value={semesterId}
-        onChange={e => setSemesterId(Number(e.target.value))}
+      <Autocomplete
+        fullWidth
         disabled={loading}
+        options={semesters}
+        getOptionLabel={(option) => option.name}
+        value={semesters.find(s => s.id === semesterId) || null}
+        onChange={(_, newValue) => setSemesterId(newValue?.id || 1)}
+        renderInput={(params) => <TextField {...params} label="Semester" />}
       />
-      <TextField
-        label="Section IDs (comma separated)"
-        value={sectionIds}
-        onChange={e => setSectionIds(e.target.value)}
+      <Autocomplete
+        multiple
+        fullWidth
         disabled={loading}
-        helperText="Enter section IDs separated by commas, e.g., 1, 2, 3"
+        options={sections}
+        getOptionLabel={(option) => option.name}
+        value={sections.filter(s => selectedSections.includes(s.id))}
+        onChange={(_, newValue) => setSelectedSections(newValue.map(s => s.id))}
+        renderInput={(params) => <TextField {...params} label="Sections" />}
       />
       
       <Button 
