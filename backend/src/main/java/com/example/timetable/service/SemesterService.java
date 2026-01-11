@@ -57,6 +57,7 @@ public class SemesterService {
     dto.setNumber(entity.getNumber());
     dto.setAcademicYearId(entity.getAcademicYear().getId());
     dto.setDepartmentId(entity.getDepartment().getId());
+    dto.setName("Semester " + entity.getNumber());
     return dto;
   }
 

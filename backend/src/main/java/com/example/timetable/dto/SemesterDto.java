@@ -14,4 +14,5 @@ public class SemesterDto {
   private Long academicYearId;
   @NotNull
   private Long departmentId;
+  private String name;
 }
