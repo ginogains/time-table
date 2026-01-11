@@ -1,25 +1,25 @@
 # TODO for Aligning Code with Specified Flow
 
 ## Frontend API Files
-- [ ] Create departmentApi.ts
-- [ ] Create sectionApi.ts
-- [ ] Create workingDayApi.ts
-- [ ] Create timeSlotApi.ts
-- [ ] Create facultyApi.ts
-- [ ] Create roomApi.ts
-- [ ] Create rulesApi.ts (for generation constraints)
+- [x] Create departmentApi.ts
+- [x] Create sectionApi.ts
+- [x] Create workingDayApi.ts
+- [x] Create timeSlotApi.ts
+- [x] Create facultyApi.ts
+- [x] Create roomApi.ts
+- [x] Create rulesApi.ts (for generation constraints)
 
 ## Frontend Pages
-- [ ] Create DepartmentPage.tsx (CRUD)
-- [ ] Create SectionPage.tsx (CRUD)
-- [ ] Create WorkingDayPage.tsx (CRUD)
-- [ ] Create TimeSlotPage.tsx (CRUD)
-- [ ] Create FacultyPage.tsx (CRUD)
-- [ ] Create RoomPage.tsx (CRUD)
-- [ ] Create RulesPage.tsx (for setting constraints)
-- [ ] Rename ClassTimetablePage.tsx to SectionTimetablePage.tsx
-- [ ] Create FacultyTimetablePage.tsx
-- [ ] Create PrintableTimetablePage.tsx
+- [x] Create DepartmentPage.tsx (CRUD)
+- [x] Create SectionPage.tsx (CRUD)
+- [x] Create WorkingDayPage.tsx (CRUD)
+- [x] Create TimeSlotPage.tsx (CRUD) - Fixed import issue
+- [x] Create FacultyPage.tsx (CRUD)
+- [x] Create RoomPage.tsx (CRUD)
+- [x] Create RulesPage.tsx (for setting constraints)
+- [x] Rename ClassTimetablePage.tsx to SectionTimetablePage.tsx
+- [x] Create FacultyTimetablePage.tsx
+- [x] Create PrintableTimetablePage.tsx
 
 ## Frontend Updates
 - [ ] Update App.tsx to include navigation and routes for all pages in order: Department, Sections, Working Days, Periods, Subjects, Faculty, Rooms, Rules, Generate, Views (with sub-links for section, faculty, printable)
